@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {
+		DOCKERHUB_CREDENTIALS=credentials('credentialsId')
+	}
     tools {
         maven 'mvn'
     }
@@ -27,13 +30,16 @@ pipeline {
           }
         }
         
-        stage('Publish image to Docker Hub') {
-          
+        stage('Login') {
             steps {
-        docker.withRegistry([ credentialsId: "dockerHub", url: "" ]) {
-          sh  'docker push raju531/samplewebapp:latest'
-        //  sh  'docker push nikhilnidhi/samplewebapp:$BUILD_NUMBER' 
+             sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'   
+            }
         }
+        
+        stage('Publish image to Docker Hub') {     
+            steps {
+          sh  'docker push raju531/samplewebapp:latest'
+        //  sh  'docker push nikhilnidhi/samplewebapp:$BUILD_NUMBER'
                   
           }
         }
