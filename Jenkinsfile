@@ -32,7 +32,8 @@ pipeline {
         
         stage('Login') {
             steps {
-             sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW'   
+             sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login --username $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+	 
             }
         }
         
@@ -47,7 +48,7 @@ pipeline {
       stage('Run Docker container on Jenkins Agent') {
              
             steps 
-   {
+            {
                 sh "docker run -d -p 8003:8060 push/samplewebapp"
  
             }
@@ -56,9 +57,9 @@ pipeline {
             steps {
                 sshagent(['vagrant']) {
                    sh "cp /var/lib/jenkins/workspace/Declarative-Pipeline/target/*.war /opt/tomcat/tomcat9/webapps"
-}
-            }
-        }
+                                      }
+                  }
+                                }
         
         stage('Deploy To Nexus'){
             steps {
