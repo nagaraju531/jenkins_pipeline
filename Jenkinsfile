@@ -63,7 +63,7 @@ pipeline {
         
         stage('Deploy To Nexus'){
             steps {
-                   nexusArtifactUploader artifacts: [[artifactId: 'GUI-Application', classifier: '', file: 'target/GUI-Application-001v.war', type: 'war']], credentialsId: 'nexus-id', groupId: 'GUI.com', nexusUrl: '192.168.33.10:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'test', version: '001v'
+                   nexusArtifactUploader artifacts: [[artifactId: 'GUI-Application', classifier: '', file: 'target/GUI-Application-002v.war', type: 'war']], credentialsId: 'nexus-id', groupId: 'GUI.com', nexusUrl: '192.168.33.10:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'test', version: '002v'
             }
         }
         
